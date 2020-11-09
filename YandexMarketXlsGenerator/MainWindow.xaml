@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:YandexMarketXlsGenerator"
         xmlns:prop="clr-namespace:YandexMarketXlsGenerator.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="429.5" Width="985.5" Icon="yandex-direct-logo.ico">
+        Title="YandexDirect exporter" Height="429.5" Width="985.5" Icon="yandex-direct-logo.ico">
     <Window.Resources>
         <local:NullToFalseConverter x:Key="NullToFalseConverter"/>
     </Window.Resources>

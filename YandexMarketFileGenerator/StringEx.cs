@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace YandexMarketXlsGenerator
+namespace YandexMarketFileGenerator
 {
     public static class StringEx
     {
@@ -28,7 +28,7 @@ namespace YandexMarketXlsGenerator
 
         public static string ToViewedUrl(this string source)
         {
-            var result = source.Replace(" ", "-");
+            var result = source.ReplaceAll(new[] { " ", ".", "/", "_" }, newSubString: "-");
 
             result = Regex.Replace(result, "-{2,}", "-").Trim('-');
 

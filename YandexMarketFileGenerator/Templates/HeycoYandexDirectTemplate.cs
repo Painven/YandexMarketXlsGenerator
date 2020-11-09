@@ -118,7 +118,7 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetViewedUrl()
         {
-            string url = $"{Manufacturer} {Product.Model}".ReplaceAll(new[] { " ", ".", "/", "_" }, newSubString: "-");
+            string url = $"{Manufacturer} {Product.Model}".ToViewedUrl();
             
             if(url.Length >= VIEWED_URL_MAX_LENGTH)
             {

@@ -102,11 +102,11 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetViewedUrl()
         {
-            string url = $"{Manufacturer} {MODEL_REPLACED}".ReplaceAll(new[] { " ", ".", "/", "_" }, newSubString: "-");
+            string url = $"{Manufacturer} {MODEL_REPLACED}".ToViewedUrl();
 
             if (url.Length >= VIEWED_URL_MAX_LENGTH)
             {
-                url = Product.Model.ReplaceAll(new[] { " ", ".", "/", "_" }, newSubString: "-");
+                url = Product.Model.ToViewedUrl();
             }
 
             if (url.Length >= VIEWED_URL_MAX_LENGTH)

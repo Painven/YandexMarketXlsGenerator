@@ -99,10 +99,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Helpers\Helpers.csproj">
-      <Project>{4439C2FA-A43A-4360-9866-2386D6220956}</Project>
-      <Name>Helpers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\YandexMarketFileGenerator\YandexMarketFileGenerator.csproj">
       <Project>{3DCCD5DC-B140-4485-A0AC-58B535D26BFF}</Project>
       <Name>YandexMarketFileGenerator</Name>

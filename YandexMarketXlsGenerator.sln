@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexMarketXlsGenerator", "YandexMarketXlsGenerator\YandexMarketXlsGenerator.csproj", "{16F84D73-6DD2-4DB3-8D1E-094FF147557A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexMarketFileGenerator", "YandexMarketFileGenerator\YandexMarketFileGenerator.csproj", "{3DCCD5DC-B140-4485-A0AC-58B535D26BFF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{4439C2FA-A43A-4360-9866-2386D6220956}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +21,11 @@ Global
 		{3DCCD5DC-B140-4485-A0AC-58B535D26BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DCCD5DC-B140-4485-A0AC-58B535D26BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DCCD5DC-B140-4485-A0AC-58B535D26BFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4439C2FA-A43A-4360-9866-2386D6220956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4439C2FA-A43A-4360-9866-2386D6220956}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4439C2FA-A43A-4360-9866-2386D6220956}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4439C2FA-A43A-4360-9866-2386D6220956}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B1CF462-6A3A-4128-94D0-EFB206798F4A}
 	EndGlobalSection
 EndGlobal
