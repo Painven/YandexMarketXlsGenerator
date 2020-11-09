@@ -138,11 +138,11 @@ namespace YandexMarketFileGenerator.Templates
 
             if (lineNumber == 1)
             {
-                result = $"{Manufacturer} {replacedModel}".ToLower().RemoveInvalidCharsInYandexKeyPhrase();
+                result = $"{Manufacturer} {replacedModel}".ToLower().ToKeyPhrase();
             }
             else if (lineNumber == 2)
             {
-                result = $"{replacedModel} -{Manufacturer}".ToLower().RemoveInvalidCharsInYandexKeyPhrase();
+                result = $"{replacedModel} -{Manufacturer}".ToLower().ToKeyPhrase();
             }
             else
             {

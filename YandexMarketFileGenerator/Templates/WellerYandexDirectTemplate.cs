@@ -210,30 +210,21 @@ namespace YandexMarketFileGenerator.Templates
 
             if (lineNumber == 1)
             {
-                var phrase = ModelWithoutManufacturerName.Split().Select(v => parentSection.ParentTemplate.InvalidWords.Contains(v.ToLower()) ? "-" + v : v);
-                var data = string.Join(" ", phrase);
-                result = data.RemoveInvalidCharsInYandexKeyPhrase();
+                throw new NotImplementedException();
             }
             else if (lineNumber == 2)
             {
                 result = $"{Manufacturer} {ModelWithoutManufacturerName}"
-                    .RemoveInvalidCharsInYandexKeyPhrase();
+                    .ToKeyPhrase();
             }
             else if (lineNumber == 3)
             {
                 result = $"{ModelWithoutManufacturerName} {Manufacturer.ToLower()}"
-                    .RemoveInvalidCharsInYandexKeyPhrase();
+                    .ToKeyPhrase();
             }
             else if (lineNumber == 4)
             {
-                var phrase = ModelWithoutManufacturerName
-                    .Split()
-                    .Select(v => parentSection.ParentTemplate.InvalidWords.Contains(v.ToLower()) ? string.Empty : v)
-                    .Where(w => !string.IsNullOrEmpty(w))
-                    .ToList();
-                var data = string.Join(string.Empty, phrase);
-                result = data
-                    .RemoveInvalidCharsInYandexKeyPhrase();
+                throw new NotImplementedException();
             }
             else
             {

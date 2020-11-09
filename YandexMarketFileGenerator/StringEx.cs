@@ -7,7 +7,7 @@ namespace YandexMarketFileGenerator
 {
     public static class StringEx
     {
-        public static string RemoveInvalidCharsInYandexKeyPhrase(this string str)
+        public static string ToKeyPhrase(this string str, bool toLowerCase =  true)
         {
             string[] InvaldChars = new string [] { "(", ")", "/", "\\" };
             if (str == null)
@@ -22,13 +22,18 @@ namespace YandexMarketFileGenerator
                     buffer = buffer.Replace(c, string.Empty);
                 }
 
+                if(toLowerCase)
+                {
+                    buffer = buffer.ToLower();
+                }
+
                 return buffer;
             }
         }
 
         public static string ToViewedUrl(this string source)
         {
-            var result = source.ReplaceAll(new[] { " ", ".", "/", "_" }, newSubString: "-");
+            var result = source.ReplaceAll(new[] { " ", ".", "/", "_", "%", "*", "~", "!", "@", "$", "&", "(", ")" }, newSubString: "-");
 
             result = Regex.Replace(result, "-{2,}", "-").Trim('-');
 

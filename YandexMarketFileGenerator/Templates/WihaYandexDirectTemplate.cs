@@ -184,17 +184,17 @@ namespace YandexMarketFileGenerator.Templates
 
             if (lineNumber == 1)
             {
-                result = Product.Sku.RemoveInvalidCharsInYandexKeyPhrase();
+                result = Product.Sku.ToKeyPhrase();
             }
             else if (lineNumber == 2)
             {
                 string modelString = (parentSection.Count() == 2) ? Product.Sku.Replace("WI ", string.Empty) : Product.Model;
 
-                result = $"{Product.ProductTypeShort} {Manufacturer} {modelString}".RemoveInvalidCharsInYandexKeyPhrase();
+                result = $"{Product.ProductTypeShort} {Manufacturer} {modelString}".ToKeyPhrase();
             }
             else if (lineNumber == 3)
             {
-                result = $"{Manufacturer} {Product.Model}".RemoveInvalidCharsInYandexKeyPhrase();
+                result = $"{Manufacturer} {Product.Model}".ToKeyPhrase();
             }
             else
             {

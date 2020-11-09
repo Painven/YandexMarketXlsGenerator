@@ -11,7 +11,7 @@ namespace YandexMarketFileGenerator
 
         string BuildExportInformation(IEnumerable<OpenCartProductLine> productsInfo, int startGroupSectionNumber);
         string CreateSection(OpenCartProductLine productInfo, int groupIndex, int linesCount);
-        List<string> InvalidWords { get; }
+
         Dictionary<string, string> ColumnStaticValues { get; }
     }
 }

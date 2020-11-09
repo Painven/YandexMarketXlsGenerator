@@ -42,6 +42,10 @@ namespace YandexMarketFileGenerator
             resultDictionary = new Dictionary<string, string>();
         }
 
+        protected virtual string GetProductPrice()
+        {
+            return Product.Price != decimal.Zero ? Product.Price.ToString("F0") : string.Empty;
+        }
         protected abstract void FillDictionary(int lineNumber);
         protected virtual string GetGroupName()
         {

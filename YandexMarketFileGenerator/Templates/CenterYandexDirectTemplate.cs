@@ -90,73 +90,40 @@ namespace YandexMarketFileGenerator.Templates
 
         }
 
-        private string GetProductPrice()
-        {
-            string priceString = Product.Price != decimal.Zero ? Product.Price.ToString("F0") : string.Empty;
-
-            return priceString;
-        }
-
-        protected override string GetViewedUrl()
-        {
-            return Product.Model.ToViewedUrl();
-        }
-
-        protected override string GetGroupName()
-        {
-            string groupName = $"{Manufacturer} {Product.Model}".ToLower().Trim();
-
-            return groupName;
-        }
-
-        protected override string GetTitle1()
-        {
-            var title = $"{Manufacturer} {Product.Model} {Product.ProductTypeShort}";
-
-            return title;
-        }
-
-        protected override string GetTitle2()
-        {
-            var title = $"{Manufacturer} {Product.Model}";
-
-            return title;
-        }
-
-        protected override string GetTitle3()
-        {
-            var title = $"{Manufacturer} {Product.Model} {Product.ProductTypeFull} c доставкой РФ!";
-
-            return title;
-        }
-
+        protected override string GetViewedUrl() => Product.Model.ToViewedUrl();
+        protected override string GetGroupName() => Product.Model;
+        protected override string GetTitle1() => $"{Product.Model} {Product.ProductTypeFull}";
+        protected override string GetTitle2() => $"{Product.Model} {Product.ProductTypeShort}";
+        protected override string GetTitle3() => $"{Product.Model} {Product.ProductTypeFull} от официального дилера!";
+        
         protected override string GetPhrase(int lineNumber)
         {
             string result = null;
 
-            var replacedModel = Regex.Replace(Product.Model, " {2,}", " ").Trim();
+            var modelWithDash = Regex.Replace(Product.Model, @"CENTER (\d+)", "CENTER-$1");
+            var firstWord = Product.ProductTypeFull.Split().First();
+            var secondWord = Product.ProductTypeFull.Split().Last();
+
+            //Регистратор температуры CENTER-340
+            //Center 340 -регистратор
+            //Регистратор CENTER-340 -температура
+
 
             if (lineNumber == 1)
             {
-                result = $"{Manufacturer} {replacedModel}".ToLower().RemoveInvalidCharsInYandexKeyPhrase();
+                result = $"{Product.ProductTypeFull} {modelWithDash}".ToKeyPhrase();
             }
             else if (lineNumber == 2)
             {
-                result = $"{replacedModel} -{Manufacturer}".ToLower().RemoveInvalidCharsInYandexKeyPhrase();
+                result = $"{Product.Model} -{firstWord}".ToKeyPhrase();
+            }
+            else if (lineNumber == 3)
+            {
+                result = $"{firstWord} {modelWithDash} -{secondWord}".ToKeyPhrase();
             }
             else
             {
                 throw new FormatException();
-            }
-
-            result = Regex.Replace(result, " +", " ")
-                .Replace("-", " ")
-                .Trim();
-
-            if (result.Split().Length > 7)
-            {
-                //throw new FormatException("Длина ключа должна содержать не более 7 слов");
-                File.AppendAllLines("errors_Center.txt", new string[] { $"[{DateTime.Now.ToShortTimeString()}] {parentSection.ProductLine.Sku}" });
             }
 
             return result;
