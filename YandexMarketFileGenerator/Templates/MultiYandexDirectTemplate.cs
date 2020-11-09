@@ -57,10 +57,7 @@ namespace YandexMarketFileGenerator.Templates
         private string GetModelWithManufacturer => (Product.Model.Contains("MULTI") ? $"{Product.Model}" : $"MULTI {Product.Model}").Trim();
         private string GetModelWithoutManufacturer => Product.Model.Replace("MULTI ", string.Empty).Trim();
 
-        public MultiYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection)
-        {
-            Product.Manufacturer = "Multi";
-        }
+        public MultiYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection) { }
 
         protected override void FillDictionary(int lineNumber)
         {

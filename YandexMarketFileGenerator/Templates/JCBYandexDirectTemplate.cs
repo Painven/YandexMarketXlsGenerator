@@ -55,10 +55,7 @@ namespace YandexMarketFileGenerator.Templates
 
     internal class JCBYandexMarketSectionLine : YandexMarketSectionLineBase
     {
-        public JCBYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection)
-        {
-            Product.Manufacturer = "JCB";
-        }
+        public JCBYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection) { }
 
         protected override void FillDictionary(int lineNumber)
         {
@@ -165,7 +162,7 @@ namespace YandexMarketFileGenerator.Templates
 
             if (lineNumber == 1)
             {
-                phrase = $"{Product.Manufacturer} {Product.Model} {Product.ProductTypeShort}";
+                phrase = $"{Manufacturer} {Product.Model} {Product.ProductTypeShort}";
             }
             else if (lineNumber == 2)
             {
@@ -173,7 +170,7 @@ namespace YandexMarketFileGenerator.Templates
             }
             else if (lineNumber == 3)
             {
-                phrase = $"{Product.Manufacturer} {Product.Model}";
+                phrase = $"{Manufacturer} {Product.Model}";
             }
             else if (lineNumber == 4)
             {

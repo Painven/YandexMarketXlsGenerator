@@ -56,10 +56,7 @@ namespace YandexMarketFileGenerator.Templates
 
     internal class FITYandexMarketSectionLine : YandexMarketSectionLineBase
     {
-        public FITYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection)
-        {
-            Product.Manufacturer = "FIT";
-        }
+        public FITYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection) { }
 
         protected override void FillDictionary(int lineNumber)
         {
@@ -122,14 +119,14 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetTitle1()
         {
-            var title = $"{Product.Manufacturer} {Product.Sku} {Product.ProductTypeShort}";
+            var title = $"{Manufacturer} {Product.Sku} {Product.ProductTypeShort}";
 
             return title;
         }
 
         protected override string GetTitle2()
         {
-            string title =  $"{Product.Manufacturer} {Product.Sku}";
+            string title =  $"{Manufacturer} {Product.Sku}";
 
             return title;
         }
@@ -140,16 +137,16 @@ namespace YandexMarketFileGenerator.Templates
 
             if(!string.IsNullOrWhiteSpace(Product.Model))
             {
-                title = $"{Product.Manufacturer} {Product.ProductTypeFull} {Product.Model} {Product.Sku} с доставкой по России!";
+                title = $"{Manufacturer} {Product.ProductTypeFull} {Product.Model} {Product.Sku} с доставкой по России!";
             }
             else
             {
-                title = $"{Product.Manufacturer} {Product.Sku} {Product.ProductTypeFull} с доставкой по России!";
+                title = $"{Manufacturer} {Product.Sku} {Product.ProductTypeFull} с доставкой по России!";
             }
 
             if (title.Length >= TITLE3_MAX_LENGTH)
             {
-                title = $"{Product.Manufacturer} {Product.Sku} {Product.ProductTypeFull} в наличии";
+                title = $"{Manufacturer} {Product.Sku} {Product.ProductTypeFull} в наличии";
             }
 
             if (title.Length >= TITLE3_MAX_LENGTH)
@@ -167,11 +164,11 @@ namespace YandexMarketFileGenerator.Templates
 
             if (lineNumber == 1)
             {
-                phrase = $"{Product.Manufacturer} {Product.Sku}";
+                phrase = $"{Manufacturer} {Product.Sku}";
             }
             else if(lineNumber == 2)
             {
-                phrase = $"{Product.Manufacturer}-{Product.Sku}";
+                phrase = $"{Manufacturer}-{Product.Sku}";
             }
             else if (lineNumber == 3)
             {
@@ -179,7 +176,7 @@ namespace YandexMarketFileGenerator.Templates
             }
             else if (lineNumber == 4)
             {
-                phrase = $"{Product.ProductTypeShort} {Product.Manufacturer} {Product.Sku}";
+                phrase = $"{Product.ProductTypeShort} {Manufacturer} {Product.Sku}";
             }
             else if(lineNumber == 5)
             {

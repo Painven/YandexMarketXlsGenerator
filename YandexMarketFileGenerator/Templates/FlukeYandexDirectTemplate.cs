@@ -54,10 +54,7 @@ namespace YandexMarketFileGenerator.Templates
 
     internal class FlukeYandexMarketSectionLine : YandexMarketSectionLineBase
     {
-        public FlukeYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection)
-        {
-            Product.Manufacturer = "Fluke";
-        }
+        public FlukeYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection) { }
 
         protected override void FillDictionary(int lineNumber)
         {
@@ -120,25 +117,25 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetTitle1()
         {
-            var title = $"{Product.Manufacturer} {Product.Model} {Product.ProductTypeShort}";
+            var title = $"{Manufacturer} {Product.Model} {Product.ProductTypeShort}";
 
             return title;
         }
 
         protected override string GetTitle2()
         {
-            string title =  $"{Product.Manufacturer} {Product.Model}";
+            string title =  $"{Manufacturer} {Product.Model}";
 
             return title;
         }
 
         protected override string GetTitle3()
         {
-            string title = $"{Product.Manufacturer} {Product.Model} (арт. {Product.Sku}) {Product.ProductTypeFull} с доставкой по России!";
+            string title = $"{Manufacturer} {Product.Model} (арт. {Product.Sku}) {Product.ProductTypeFull} с доставкой по России!";
 
             if (title.Length >= TITLE3_MAX_LENGTH)
             {
-                title = $"{Product.Manufacturer} {Product.Model} {Product.ProductTypeFull} в наличии";
+                title = $"{Manufacturer} {Product.Model} {Product.ProductTypeFull} в наличии";
             }
 
             if (title.Length >= TITLE3_MAX_LENGTH)
@@ -156,7 +153,7 @@ namespace YandexMarketFileGenerator.Templates
 
             if (lineNumber == 1)
             {
-                phrase = $"{Product.Manufacturer} {Product.Model}";
+                phrase = $"{Manufacturer} {Product.Model}";
             }
             else if(lineNumber == 2)
             {
@@ -164,7 +161,7 @@ namespace YandexMarketFileGenerator.Templates
             }
             else if (lineNumber == 3)
             {
-                phrase = $"{Product.Manufacturer} {Product.Sku}";
+                phrase = $"{Manufacturer} {Product.Sku}";
             }
             else if (lineNumber == 4)
             {

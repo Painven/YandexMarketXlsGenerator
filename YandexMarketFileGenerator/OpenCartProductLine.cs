@@ -12,7 +12,7 @@ namespace YandexMarketFileGenerator
         public string URL { get; set; }
         public decimal Price { get; set; }
         public bool IsUniquePhrase { get; set; }
-        public string Manufacturer { get; set; }
+        public string CustomField { get; set; }
         
 
         public static OpenCartProductLine Parse(string line)
@@ -31,11 +31,8 @@ namespace YandexMarketFileGenerator
                 product.Sku = ParseModel(data[5]);
                 product.Price = !string.IsNullOrWhiteSpace(data[6]) ? decimal.Parse(data[6]) : decimal.Zero;
                 product.URL = data[7].Replace("  ", " ").Trim();
+                product.CustomField = data[8].Trim();
 
-                if(data.Length == 9)
-                {
-                    product.Manufacturer = data[8].Trim();
-                }
 
                 
             }

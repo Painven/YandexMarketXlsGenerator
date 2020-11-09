@@ -57,10 +57,7 @@ namespace YandexMarketFileGenerator.Templates
 
     internal class GedoreYandexMarketSectionLine : YandexMarketSectionLineBase
     {
-        public GedoreYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection)
-        {
-            Product.Manufacturer = "Gedore";
-        }
+        public GedoreYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection) { }
 
         protected override void FillDictionary(int lineNumber)
         {
@@ -118,7 +115,7 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetTitle1()
         {
-            var title = $"{Product.Manufacturer} {Product.Sku} {Product.ProductTypeShort}";
+            var title = $"{Manufacturer} {Product.Sku} {Product.ProductTypeShort}";
             if (title.Length >= TITLE1_MAX_LENGTH)
             {
                 //throw new FormatException("Превышена допустимая длина: " + title);
@@ -133,10 +130,10 @@ namespace YandexMarketFileGenerator.Templates
 
             string modelOrSku = !string.IsNullOrEmpty(Product.Model) ? $"{Product.Model} {Product.Sku}" : Product.Sku;
 
-            var title = $"{Product.Manufacturer} {modelOrSku}";
+            var title = $"{Manufacturer} {modelOrSku}";
             if (title.Length >= TITLE2_MAX_LENGTH)
             {
-                title = $"{Product.Manufacturer} {Product.Sku}";
+                title = $"{Manufacturer} {Product.Sku}";
                 //throw new FormatException("Превышена допустимая длина: " + title);
             }
             return title;
@@ -146,11 +143,11 @@ namespace YandexMarketFileGenerator.Templates
         {
             string modelOrSku = !string.IsNullOrEmpty(Product.Model) ? $"{Product.Sku} {Product.Model}" : Product.Sku;
 
-            string title = $"{Product.Manufacturer} {modelOrSku} {Product.ProductTypeFull} с доставкой по России!";
+            string title = $"{Manufacturer} {modelOrSku} {Product.ProductTypeFull} с доставкой по России!";
 
             if (title.Length >= TITLE3_MAX_LENGTH)
             {
-                title = $"{Product.Manufacturer} {Product.Sku} {Product.ProductTypeFull} в наличии!";
+                title = $"{Manufacturer} {Product.Sku} {Product.ProductTypeFull} в наличии!";
             }
 
             if (title.Length >= TITLE3_MAX_LENGTH)
@@ -169,7 +166,7 @@ namespace YandexMarketFileGenerator.Templates
 
             if (lineNumber == 1)
             {
-                phrase = $"{Product.Manufacturer} {Product.Sku}";
+                phrase = $"{Manufacturer} {Product.Sku}";
             }
             if (lineNumber == 2)
             {
@@ -177,11 +174,11 @@ namespace YandexMarketFileGenerator.Templates
             }
             else if (lineNumber == 3)
             {
-                phrase = $"{Product.Manufacturer} GE-{Product.Sku}";
+                phrase = $"{Manufacturer} GE-{Product.Sku}";
             }
             else if (lineNumber == 4 && Product.IsUniquePhrase)
             {
-                phrase = $"{Product.Manufacturer} {Product.Model} {Product.Sku}";
+                phrase = $"{Manufacturer} {Product.Model} {Product.Sku}";
             }
             else if (lineNumber == 5 && Product.IsUniquePhrase)
             {

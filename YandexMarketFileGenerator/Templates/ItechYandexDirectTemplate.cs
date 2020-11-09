@@ -55,10 +55,7 @@ namespace YandexMarketFileGenerator.Templates
 
     internal class ItechYandexMarketSectionLine : YandexMarketSectionLineBase
     {
-        public ItechYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection)
-        {
-            Product.Manufacturer = Manufacturer;
-        }
+        public ItechYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection) { }
 
         protected override void FillDictionary(int lineNumber)
         {
@@ -104,7 +101,7 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetViewedUrl()
         {
-            string url = $"{Product.Model} {Product.Manufacturer}".ToViewedUrl();
+            string url = $"{Product.Model} {Manufacturer}".ToViewedUrl();
 
             if (url.Length >= VIEWED_URL_MAX_LENGTH)
             {
@@ -123,7 +120,7 @@ namespace YandexMarketFileGenerator.Templates
         {
             //IT9121E ITECH Измеритель мощности
 
-            var title = $"{Product.Model} {Product.Manufacturer} {Product.ProductTypeShort}";
+            var title = $"{Product.Model} {Manufacturer} {Product.ProductTypeShort}";
 
             return title;
         }
@@ -132,7 +129,7 @@ namespace YandexMarketFileGenerator.Templates
         {
             //IT9121E ITECH
 
-            var title = $"{Product.Model} {Product.Manufacturer}";
+            var title = $"{Product.Model} {Manufacturer}";
 
             return title;
         }
@@ -141,14 +138,14 @@ namespace YandexMarketFileGenerator.Templates
         {
             //IT9121E ITECH Измеритель мощности от официального дилера с доставкой по России
 
-            var title = $"{Product.Model} {Product.Manufacturer} {Product.ProductTypeFull} от официального дилера с доставкой по России";
+            var title = $"{Product.Model} {Manufacturer} {Product.ProductTypeFull} от официального дилера с доставкой по России";
             if(title.Length >= TITLE3_MAX_LENGTH)
             {
-                title = $"{Product.Model} {Product.Manufacturer} {Product.ProductTypeFull} от официального дилера";
+                title = $"{Product.Model} {Manufacturer} {Product.ProductTypeFull} от официального дилера";
 
                 if (title.Length >= TITLE3_MAX_LENGTH)
                 {
-                    title = $"{Product.Model} {Product.Manufacturer} {Product.ProductTypeFull} в наличии";
+                    title = $"{Product.Model} {Manufacturer} {Product.ProductTypeFull} в наличии";
                 }
             }
 

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StringEx.cs" />
+    <Compile Include="Templates\SewYandexDirectTemplate.cs" />
     <Compile Include="Templates\FlukeYandexDirectTemplate.cs" />
     <Compile Include="Templates\ArtesynYandexDirectTemplate.cs" />
     <Compile Include="Templates\CenterYandexDirectTemplate.cs" />
@@ -53,7 +54,6 @@
     <Compile Include="Templates\ParatYandexDirectTemplate.cs" />
     <Compile Include="Templates\KraftoolYandexDirectTemplate.cs" />
     <Compile Include="Templates\GrindaYandexDirectTemplate.cs" />
-    <Compile Include="Templates\StayerYandexDirectTemplate.cs" />
     <Compile Include="Templates\JCBYandexDirectTemplate.cs" />
     <Compile Include="Templates\EnkorYandexDirectTemplate.cs" />
     <Compile Include="Templates\VihrYandexDirectTemplate.cs" />
@@ -68,7 +68,6 @@
     <Compile Include="Templates\KnipexYandexDirectTemplate.cs" />
     <Compile Include="Templates\TestoYandexDirectTemplate.cs" />
     <Compile Include="Templates\MeanWellYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ALAYandexDirectTemplate.cs" />
     <Compile Include="Templates\ErsaYandexDirectTemplate.cs" />
     <Compile Include="Templates\LeCroyYandexDirectTemplate.cs" />
     <Compile Include="Templates\QEYandexDirectTemplate.cs" />

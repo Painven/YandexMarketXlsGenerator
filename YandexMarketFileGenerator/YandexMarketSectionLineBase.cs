@@ -46,7 +46,33 @@ namespace YandexMarketFileGenerator
         {
             return Product.Price != decimal.Zero ? Product.Price.ToString("F0") : string.Empty;
         }
-        protected abstract void FillDictionary(int lineNumber);
+
+        protected virtual void FillDictionary(int lineNumber)
+        {
+            var cells = GetCellsRange();
+
+            foreach (var cellLetter in cells)
+            {
+                if (parentSection.ParentTemplate.ColumnStaticValues.ContainsKey(cellLetter))
+                {
+                    resultDictionary[cellLetter] = parentSection.ParentTemplate.ColumnStaticValues[cellLetter];
+                }
+                else
+                {
+                    resultDictionary[cellLetter] = string.Empty;
+                }
+            }
+
+            resultDictionary["E"] = GetGroupName();
+            resultDictionary["F"] = $"{parentSection.GroupIndex}";
+            resultDictionary["I"] = GetPhrase(lineNumber);
+            resultDictionary["K"] = GetTitle1();
+            resultDictionary["L"] = GetTitle2();
+            resultDictionary["M"] = GetTitle3();
+            resultDictionary["Q"] = FullUrlPath;
+            resultDictionary["R"] = GetViewedUrl();
+            resultDictionary["AV"] = GetProductPrice();
+        }
         protected virtual string GetGroupName()
         {
             return ($"{parentSection.ProductLine.Model} {parentSection.ProductLine.ProductTypeShort}")
@@ -88,6 +114,7 @@ namespace YandexMarketFileGenerator
             }
         
         }
+        
         protected abstract string GetTitle1();
         protected abstract string GetTitle2();
         protected abstract string GetTitle3();
