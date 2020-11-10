@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YandexMarketXlsGenerator"
-        xmlns:prop="clr-namespace:YandexMarketXlsGenerator.Properties"
+        xmlns:vm="clr-namespace:YandexMarketXlsGenerator.ViewModels"
         mc:Ignorable="d"
-        Title="YandexDirect exporter" Height="429.5" Width="985.5" Icon="yandex-direct-logo.ico">
+        Title="YandexDirect exporter" Height="429.5" Width="889.5" Icon="yandex-direct-logo.ico">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <local:NullToFalseConverter x:Key="NullToFalseConverter"/>
     </Window.Resources>
+    
     <DockPanel>
         <Grid Margin="2,10,2,2">
             <Grid.RowDefinitions>
@@ -25,13 +29,13 @@
                 <TextBox x:Name="txtStartGroupIndex"
                          HorizontalContentAlignment="Center"
                          DockPanel.Dock="Left"
-                    Width="40" HorizontalAlignment="Left" Margin="2" Text="2"/>
+                    Width="40" HorizontalAlignment="Left" Margin="2" Text="{Binding StartGroupIndex}"/>
 
                 <TextBlock x:Name="txtLoadedProductsCount" 
-                       Text="Загружено товаров: 0"  
+                       Text="{Binding LoadedProductLines, StringFormat='{}Загружено товаров: {0}', FallbackValue=Загружено товаров: 0}"  
                        Margin="0,0,8,2" 
                        FontWeight="Bold" 
-                           HorizontalAlignment="Right"
+                       HorizontalAlignment="Right"
                        DockPanel.Dock="Right"/>
             </DockPanel>
             <TextBox x:Name="txtInput" 
@@ -39,19 +43,23 @@
                      Grid.Row="1" 
                      AcceptsReturn="True" 
                      AcceptsTab="True" 
-                     Text="{Binding Source={x:Static prop:Settings.Default}, Path=InputProductLines, UpdateSourceTrigger=PropertyChanged}"
-                     TextChanged="txtInput_TextChanged"/>
+                     Text="{Binding RawStringData}"/>
 
             <DockPanel Grid.Row="2" Height="40">
                 <TextBlock Text="Шаблон" DockPanel.Dock="Left" VerticalAlignment="Center" />
-                <ComboBox x:Name="cmbxTemplateType" DockPanel.Dock="Left" 
+                <ComboBox x:Name="cmbxTemplateType" 
+                          DisplayMemberPath="Description"
+                          SelectedValuePath="Type"
+                          ItemsSource="{Binding Templates}"
+                          SelectedValue="{Binding SelectedTemplate}"
+                          DockPanel.Dock="Left" 
                           IsEditable="True"
                           IsTextSearchEnabled="True"
                           IsTextSearchCaseSensitive="False"
                           MinWidth="200" Margin="4" />
-                
-                <Button x:Name="btnGetExportData" Click="btnGetExportData_Click"  
+                <Button x:Name="btnGetExportData" 
                         Padding="15,2,15,2" Margin="4" HorizontalAlignment="Right"
+                        Command="{Binding GetExportDataCommand}"
                         Background="Blue"
                         Foreground="Black"
                         FontWeight="Bold"

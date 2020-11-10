@@ -31,6 +31,11 @@ namespace YandexMarketFileGenerator
             }
         }
 
+        public static string ToTitle(this string str)
+        {
+            return Regex.Replace(str, " {2,}", " ").Trim();
+        }
+
         public static string ToViewedUrl(this string source)
         {
             var result = source.ReplaceAll(new[] { " ", ".", "/", "_", "%", "*", "~", "!", "@", "$", "&", "(", ")" }, newSubString: "-");

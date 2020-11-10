@@ -90,13 +90,6 @@ namespace YandexMarketFileGenerator.Templates
 
         }
 
-        private string GetProductPrice()
-        {
-            string priceString = Product.Price != decimal.Zero ? Product.Price.ToString("F0") : string.Empty;
-
-            return priceString;
-        }
-
         protected override string GetViewedUrl()
         {
             return $"{Manufacturer}-{Product.Model}".Replace(" ", "-").Trim(' ', '-').Replace("--", "-");

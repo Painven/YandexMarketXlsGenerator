@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace YandexMarketFileGenerator
 {
@@ -15,6 +17,17 @@ namespace YandexMarketFileGenerator
         public string CustomField { get; set; }
         
 
+        public static List<OpenCartProductLine> ParseList(string rawData)
+        {
+            var readedProducts = rawData
+                .Split(new string[] { Environment.NewLine }, StringSplitOptions.None)
+                .Skip(1)
+                .Select(line => OpenCartProductLine.Parse(line))
+                .ToList();
+
+            return readedProducts;
+        }
+
         public static OpenCartProductLine Parse(string line)
         {
             var product = new OpenCartProductLine();
@@ -27,8 +40,8 @@ namespace YandexMarketFileGenerator
                 product.ProductTypeFull = data[1].Replace("  ", " ").Trim();
                 product.ProductTypeShort = data[2].Replace("  ", " ").Trim();
                 product.IsUniquePhrase = bool.Parse(data[3]);
-                product.Model = ParseModel(data[4]);
-                product.Sku = ParseModel(data[5]);
+                product.Model = data[4].Trim();
+                product.Sku = data[5].Trim();
                 product.Price = !string.IsNullOrWhiteSpace(data[6]) ? decimal.Parse(data[6]) : decimal.Zero;
                 product.URL = data[7].Replace("  ", " ").Trim();
                 product.CustomField = data[8].Trim();
@@ -44,12 +57,5 @@ namespace YandexMarketFileGenerator
             return product;
         }
 
-        private static string ParseModel(string v)
-        {
-            return v
-                .Replace("  ", " ")
-                .Replace("+", "plus")
-                .Trim();
-        }
     }
 }
