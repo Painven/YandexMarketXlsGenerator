@@ -21,6 +21,8 @@ namespace YandexMarketFileGenerator
                 return parentSection.ProductLine;
             }
         }
+        
+        
         protected string ModelWithoutManufacturerName
         {
             get
@@ -32,8 +34,13 @@ namespace YandexMarketFileGenerator
 
                 return string.Empty;               
             }
-        }
+        }            
         protected string Manufacturer => parentSection.Manufacturer;
+        protected string Sku => Product.Sku;
+        protected string Model => Product.Model;
+        protected string ProductTypeShort => Product.ProductTypeShort;
+        protected string ProductTypeFull => Product.ProductTypeFull;
+
         protected string TranslatedManufacturer => parentSection.TranslatedManufacturer;
 
         public YandexMarketSectionLineBase(YandexMarketSection parentSection)

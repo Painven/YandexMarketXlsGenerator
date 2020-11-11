@@ -9,8 +9,9 @@ namespace YandexMarketFileGenerator
     {
         public static string ToKeyPhrase(this string str, bool toLowerCase =  true)
         {
-            string[] InvaldChars = new string [] { "(", ")", "/", "\\" };
-            if (str == null)
+            string[] InvaldChars = new string [] { "(", ")", "/", "\\", "+", "\"", "”" };
+
+            if (string.IsNullOrWhiteSpace(str))
             {
                 return null;
             }
@@ -43,6 +44,16 @@ namespace YandexMarketFileGenerator
             result = Regex.Replace(result, "-{2,}", "-").Trim('-');
 
             return result;
+        }
+
+        public static int GetTitleLength(this string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return 0;
+            }
+
+            return str.ReplaceAll(new[] { "!", ",", ".", ";", ":", "\"" }, string.Empty).Length;
         }
 
         public static bool ContainsAny(this IEnumerable<string> source, IEnumerable<string> values)
