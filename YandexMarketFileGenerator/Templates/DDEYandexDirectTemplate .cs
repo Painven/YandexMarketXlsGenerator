@@ -31,14 +31,14 @@ namespace YandexMarketFileGenerator.Templates
 
         public List<string> InvalidWords => throw new NotImplementedException();
 
-
         public string BuildExportInformation(IEnumerable<OpenCartProductLine> productsInfo, int startGroupSectionNumber)
         {
             var sb = new StringBuilder();
 
             foreach (var line in productsInfo)
             {
-                sb.Append(CreateSection(line, startGroupSectionNumber++, 4));
+                int lines = line.IsUniquePhrase ? 7 : (string.IsNullOrEmpty(line.Model) ? 4 : 6);
+                sb.Append(CreateSection(line, startGroupSectionNumber++, lines));
             }
 
             return sb.ToString();
@@ -48,7 +48,7 @@ namespace YandexMarketFileGenerator.Templates
         {
             var data = new YandexMarketSection(this, typeof(DDEYandexMarketSectionLine), productInfo, groupIndex);
 
-            return data.BuildSection(4);
+            return data.BuildSection(linesCount);
         }
     }
 
@@ -112,48 +112,42 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetGroupName()
         {
-            return $"{Manufacturer} {Product.Model}".Trim().ToLower().Replace("-dde", "dde");
+            return $"{Manufacturer} {(Product.IsUniquePhrase ? Product.Model : Product.Sku)}";
         }
 
         protected override string GetTitle1()
         {
-            //DDE ET1200 культиватор в наличии! 
-            var title = $"{Manufacturer} {ModelWithoutManufacturerName} {Product.ProductTypeShort}".Trim();
+            var title = $"{Manufacturer} {(Product.IsUniquePhrase ? Product.Model : Product.Sku)} {Product.ProductTypeShort}".Trim();
             title = Regex.Replace(title, " +", " ");
-
-            if (title.Length < (TITLE1_MAX_LENGTH - " в наличии!".Length))
-            {
-                title = title + " в наличии!";
-            }
 
             return title;
         }
 
         protected override string GetTitle2()
         {
-            //DDE ET1200 культиватор!
-            var title = $"{Manufacturer} {ModelWithoutManufacturerName} {Product.ProductTypeShort}!".Trim();
-
+            var title = $"{Manufacturer} {Product.Sku}".Trim();
             title = Regex.Replace(title, " +", " ");
-
-            if (title.Length >= TITLE2_MAX_LENGTH)
-            {
-                
-            }
-
 
             return title;
         }
 
         protected override string GetTitle3()
         {
-            //культиватор dde et1200
-            var title = $"{Product.ProductTypeFull} {Manufacturer.ToLower()} {ModelWithoutManufacturerName.ToLower()}".Trim();
-            title = Regex.Replace(title, " +", " ");
+            string title = string.Empty;
 
-            if (title.Length >= TITLE3_MAX_LENGTH)
+            if (!string.IsNullOrWhiteSpace(Product.Model))
             {
-                
+                title = $"{Product.ProductTypeFull} {Manufacturer} {Product.Model} {Sku} с доставкой по России".Trim();
+
+            }
+            else
+            {
+                title = $"{Product.ProductTypeFull} {Manufacturer} {Sku} с доставкой по России".Trim();
+            }
+
+            if(title.Length >= TITLE3_MAX_LENGTH)
+            {
+                title = $"{Product.ProductTypeFull} {Manufacturer} {Sku} от дилера".Trim();
             }
 
             return title;
@@ -168,45 +162,71 @@ namespace YandexMarketFileGenerator.Templates
             //культиватор dde et1200
             //dde et1200 -40 -культиватор
 
-            var replacedModel = Product.Model.Replace("-", " ");
+            //dde multi line sku
+
+            //CS 120
+            //dde CS 120
+
 
             if (lineNumber == 1)
             {
 
-                keyPhrase = $"{Manufacturer} {replacedModel}";
+                keyPhrase = $"{Manufacturer} {Product.Sku}";
             }
             else if (lineNumber == 2)
             {
-
-                keyPhrase = $"{replacedModel} -{Manufacturer}";
+                keyPhrase = $"{Product.Sku} -{Manufacturer}";
             }
             else if (lineNumber == 3)
             {
-
-                keyPhrase = $"{Product.ProductTypeShort} {Manufacturer} {replacedModel}";
+                keyPhrase = $"{Product.ProductTypeShort} {Manufacturer} {Product.Sku}";
             }
             else if (lineNumber == 4)
             {
-
-                var prefix = Product.ProductTypeShort.Split().Length == 1;
-                keyPhrase = $"{Manufacturer} {replacedModel} {(prefix ? "-" : string.Empty)}{Product.ProductTypeShort}";
+                keyPhrase = $"{Manufacturer} {Product.Sku} -{ProductTypeShort}";
             }
             else
             {
-                throw new ArgumentOutOfRangeException();
+                if(Product.IsUniquePhrase)
+                {
+                    if(lineNumber == 5)
+                    {
+                        keyPhrase = Product.Model;
+                    }
+                    if (lineNumber == 6)
+                    {
+                        keyPhrase = $"{Product.Model} {Product.ProductTypeShort}";
+                    }
+                    if (lineNumber == 7)
+                    {
+                        keyPhrase = $"{Manufacturer} {Product.Model}";
+                    }
+                }
+                else
+                {
+                    if (lineNumber == 5)
+                    {
+                        keyPhrase = $"{Product.Model} {Product.Sku}";
+                    }
+                    if (lineNumber == 6)
+                    {
+                        keyPhrase = $"{Manufacturer} {Product.Model} {Product.Sku}";
+                    }
+                }
             }
 
-            keyPhrase = keyPhrase.Replace("/", " ");
-            keyPhrase = keyPhrase.Replace(",", ".");
-            keyPhrase = keyPhrase.Replace("(", string.Empty);
-            keyPhrase = keyPhrase.Replace(")", string.Empty);
-            keyPhrase = keyPhrase.Replace("\"", string.Empty);
-            keyPhrase = keyPhrase.Replace("'", string.Empty);
+            if(string.IsNullOrWhiteSpace(keyPhrase))
+            {
+                throw new ArgumentNullException();
+            }
+
+            keyPhrase = keyPhrase.Replace("/", " ").Replace(",", ".").Replace("(", string.Empty).Replace(")", string.Empty)
+                                 .Replace("\"", string.Empty).Replace("'", string.Empty);
 
 
             if(keyPhrase.Split().Length >= 7)
             {
-
+                throw new ArgumentOutOfRangeException();
             }
 
             return keyPhrase.ToLower();
@@ -214,7 +234,7 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetViewedUrl()
         {
-            return $"{Manufacturer}";
+            return GetGroupName().ToViewedUrl();
         }
     }
 }

@@ -39,7 +39,8 @@ namespace YandexMarketFileGenerator.Templates
 
             foreach (var line in productsInfo)
             {
-                sb.Append(CreateSection(line, startGroupSectionNumber++, 2));
+                int lines = string.IsNullOrWhiteSpace(line.Model) ? 3 : 4;
+                sb.Append(CreateSection(line, startGroupSectionNumber++, lines));
             }
 
             return sb.ToString();
@@ -58,7 +59,7 @@ namespace YandexMarketFileGenerator.Templates
         {
             get
             {
-                return Product.Model.Replace("RE-", "RE ");
+                return Product.Sku.Replace("RE-", "RE ");
             }
         }
 
@@ -105,7 +106,7 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetGroupName()
         {
-            return $"{Manufacturer.ToUpper()} {Product.Model}";
+            return $"{Product.Sku}";
         }
 
         protected override string GetViewedUrl()
@@ -172,6 +173,14 @@ namespace YandexMarketFileGenerator.Templates
             else if (lineNumber == 2)
             {
                 phrase = $"{MODEL_REPLACED} -{Manufacturer}";
+            }
+            else if (lineNumber == 3)
+            {
+                phrase = $"{Product.Sku} {Product.ProductTypeShort}";
+            }
+            else if (lineNumber == 4)
+            {
+                phrase = $"{Product.Model} {Product.Sku}";
             }
             else
             {

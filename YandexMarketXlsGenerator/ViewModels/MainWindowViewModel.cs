@@ -39,11 +39,24 @@ namespace YandexMarketXlsGenerator.ViewModels
             }
         }
 
-        private TemplateData _selectedTemplate;
-        public TemplateData SelectedTemplate { get => _selectedTemplate; set => Set(ref _selectedTemplate, value); }
+        private int _selectedIndex;
+        public int SelectedIndex 
+        { 
+            get => _selectedIndex;
+            set
+            {
+                if(Set(ref _selectedIndex, value))
+                {
+                    Properties.Settings.Default.LastSelectedIndex = _selectedIndex;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
 
         private ObservableCollection<TemplateData> _templates;
         public ObservableCollection<TemplateData> Templates { get => _templates; set => Set(ref _templates, value); }
+
+        public TemplateData SelectedTemplate => Templates[SelectedIndex];
 
         public ICommand GetExportDataCommand { get; }
 
@@ -63,7 +76,7 @@ namespace YandexMarketXlsGenerator.ViewModels
                 Templates.Add(template);
             }
 
-            SelectedTemplate = Templates.First();
+            SelectedIndex = Properties.Settings.Default.LastSelectedIndex;
         }
 
         private void GetExportData(object obj)

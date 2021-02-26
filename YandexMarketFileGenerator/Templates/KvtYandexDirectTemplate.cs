@@ -61,18 +61,55 @@ namespace YandexMarketFileGenerator.Templates
     {
         public КВТYandexMarketSectionLine(YandexMarketSection parentSection) : base(parentSection) { }
 
-        private string SkuDigits => Product.Model.Replace("KV-", string.Empty);
+        private string SkuDigits => Product.Sku.Replace("KV-", string.Empty);
 
-        protected override string GetViewedUrl() => $"{Manufacturer} {Model}".ToViewedUrl();
+        protected override string GetViewedUrl()
+        {
+            var url = $"{Manufacturer} {Model}".ToViewedUrl();
+
+            if(url.Length >= VIEWED_URL_MAX_LENGTH)
+            {
+                url = $"{Manufacturer} {Sku}".ToViewedUrl();
+            }
+
+            return url;
+        }
+
         protected override string GetGroupName() => $"{Manufacturer} {Model}";
 
-        //КВТ БРГ-12 Болторез 67657
-        protected override string GetTitle1() => $"{Manufacturer} {Model} {ProductTypeShort} {SkuDigits}";
+        protected override string GetTitle1()
+        {
+            var title = $"{Manufacturer} {Model} {ProductTypeShort} {SkuDigits}";
 
-        //Болторез КВТ БРГ-12
-        protected override string GetTitle2() => $"{ProductTypeShort} {Manufacturer} {Model}";
+            if(title.GetTitleLength() >= TITLE1_MAX_LENGTH)
+            {
+                title = $"{Manufacturer} {Model} {ProductTypeShort}";
 
-        //КВТ БРГ-12 Гидравлический болторез 67657. Артикул: KV-67657. От дилера с доставкой!
+                if (title.GetTitleLength() >= TITLE1_MAX_LENGTH)
+                {
+                    title = $"{Manufacturer} {Sku} {ProductTypeShort}";
+                }
+            }
+
+            return title;
+        }
+
+        protected override string GetTitle2()
+        {
+            var title = $"{ProductTypeShort} {Manufacturer} {Model}";
+            if (title.GetTitleLength() >= TITLE2_MAX_LENGTH)
+            {
+                title = $"{ProductTypeShort} {Manufacturer} {Sku}";
+
+                if (title.GetTitleLength() >= TITLE2_MAX_LENGTH)
+                {
+                    title = $"{ProductTypeShort} {Manufacturer} {SkuDigits}";
+                }
+            }
+
+            return title;
+        }
+
         protected override string GetTitle3()
         {
             var title = $"{Manufacturer} {Model} {ProductTypeFull} {SkuDigits}. Артикул: {Sku}. От дилера с доставкой!";
@@ -82,15 +119,15 @@ namespace YandexMarketFileGenerator.Templates
 
                 if (title.GetTitleLength() >= TITLE3_MAX_LENGTH)
                 {
-                    title = $"{Manufacturer} {Model} {ProductTypeFull}. арт. {Sku}. От дилера с доставкой!";
+                    title = $"{Manufacturer} {Model} {ProductTypeFull}. Артикул: {Sku}. От дилера с доставкой!";
 
                     if (title.GetTitleLength() >= TITLE3_MAX_LENGTH)
                     {
-                        title = $"{Manufacturer} {Model} {ProductTypeFull}. арт. {Sku} от дилера";
+                        title = $"{Manufacturer} {Model} {ProductTypeFull}. Артикул: {Sku} от дилера";
 
                         if (title.GetTitleLength() >= TITLE3_MAX_LENGTH)
                         {
-                            title = $"{Manufacturer} {Model} {ProductTypeFull}. арт. {Sku}";
+                            title = $"{Manufacturer} {Model} {ProductTypeFull}. Артикул: {Sku}";
                         }
                     }
                 }
@@ -118,11 +155,21 @@ namespace YandexMarketFileGenerator.Templates
             }
             else if (lineNumber == 2)
             {
-                result = $"{ProductTypeFull} {Manufacturer} {ModelWithoutManufacturerName} {SkuDigits}".ToKeyPhrase();
+                result = $"{ProductTypeFull} {Manufacturer} {Model} {SkuDigits}".ToKeyPhrase();
+
+                if(result.WordsCount() >= KEY_PHRASE_MAX_WORDS || Model.Count(c => new[] { '/', '-', '.', ',', '"', '(', ')' }.Contains(c)) > 3)
+                {
+                    result = $"{ProductTypeFull} {Manufacturer} {Sku}".ToKeyPhrase();
+                }
             }
             else if (lineNumber == 3)
             {
-                result = $"{ModelWithoutManufacturerName} -квт -{ProductTypeShort}".ToKeyPhrase();
+                result = $"{Model} -квт -{ProductTypeShort.Replace("-", " -")}".ToKeyPhrase();
+
+                if(result.WordsCount() >= KEY_PHRASE_MAX_WORDS)
+                {
+                    result = $"{Model} -квт".ToKeyPhrase();
+                }
             }
             else if (lineNumber == 4)
             {
@@ -130,7 +177,7 @@ namespace YandexMarketFileGenerator.Templates
             }
             else if (lineNumber == 5)
             {
-                result = $"{Manufacturer} {ModelWithoutManufacturerName}".ToKeyPhrase();
+                result = $"{Manufacturer} {Model}".ToKeyPhrase();
             }
             else if (lineNumber == 6)
             {
@@ -143,6 +190,11 @@ namespace YandexMarketFileGenerator.Templates
             else
             {
                 throw new FormatException();
+            }
+
+            if(result.WordsCount() >= KEY_PHRASE_MAX_WORDS)
+            {
+
             }
 
             return result;

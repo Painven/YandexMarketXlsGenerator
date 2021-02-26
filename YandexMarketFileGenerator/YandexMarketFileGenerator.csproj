@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StringEx.cs" />
+    <Compile Include="Templates\UnitYandexDirectTemplate.cs" />
+    <Compile Include="Templates\CemYandexDirectTemplate.cs" />
+    <Compile Include="Templates\ProxxonYandexDirectTemplate.cs" />
+    <Compile Include="Templates\TestboyYandexDirectTemplate.cs" />
     <Compile Include="Templates\KvtYandexDirectTemplate.cs" />
     <Compile Include="Templates\WeraYandexDirectTemplate.cs" />
     <Compile Include="Templates\SchutYandexDirectTemplate.cs" />

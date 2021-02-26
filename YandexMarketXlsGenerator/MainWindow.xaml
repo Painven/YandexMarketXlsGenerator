@@ -51,7 +51,7 @@
                           DisplayMemberPath="Description"
                           SelectedValuePath="Type"
                           ItemsSource="{Binding Templates}"
-                          SelectedValue="{Binding SelectedTemplate}"
+                          SelectedIndex="{Binding SelectedIndex}"
                           DockPanel.Dock="Left" 
                           IsEditable="True"
                           IsTextSearchEnabled="True"

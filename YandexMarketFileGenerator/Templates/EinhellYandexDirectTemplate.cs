@@ -39,7 +39,7 @@ namespace YandexMarketFileGenerator.Templates
 
             foreach (var line in productsInfo)
             {
-                int count = line.IsUniquePhrase ? 8 : 4;
+                int count = line.IsUniquePhrase ? 6 : 3;
 
                 sb.Append(CreateSection(line, startGroupSectionNumber++, count));
             }
@@ -97,24 +97,12 @@ namespace YandexMarketFileGenerator.Templates
 
         protected override string GetGroupName()
         {
-            return $"{Manufacturer.ToUpper()} {Product.Sku}";
+            return $"{Manufacturer} {Product.Sku}";
         }
 
         protected override string GetViewedUrl()
         {
-            string url = $"{Manufacturer} {Product.Sku}".ToViewedUrl();
-
-            if (url.Length >= VIEWED_URL_MAX_LENGTH)
-            {
-                url = Product.Model.ToViewedUrl();
-            }
-
-            if (url.Length >= VIEWED_URL_MAX_LENGTH)
-            {
-                //throw new FormatException("Превышена допустимая длина: " + url);
-            }
-
-            return url.ToUpper();
+            return GetGroupName().ToViewedUrl();
         }
 
         protected override string GetTitle1()
@@ -132,7 +120,7 @@ namespace YandexMarketFileGenerator.Templates
         {
             string title = null;
 
-            if(Product.Model != Product.Sku)
+            if(Product.IsUniquePhrase)
             {
                 title = $"{Manufacturer} {Product.Model} {Product.Sku}";
             }
@@ -165,11 +153,6 @@ namespace YandexMarketFileGenerator.Templates
             {
                 title = $"{Manufacturer} {Product.Sku} {Product.ProductTypeFull} в наличии";
             }
-
-            if (title.Length >= TITLE3_MAX_LENGTH)
-            {
-                //throw new FormatException("Превышена допустимая длина: " + title);
-            }
             
 
             return title;
@@ -185,29 +168,21 @@ namespace YandexMarketFileGenerator.Templates
             }
             else if (lineNumber == 2)
             {
-                phrase = $"{TranslatedManufacturer} {Product.Sku}";              
+                phrase = $"{Product.ProductTypeShort} {Product.Sku}";
             }
             else if (lineNumber == 3)
             {
-                phrase = $"{Product.ProductTypeShort} {Product.Sku}";
+                phrase = Product.Sku;
             }
             else if (lineNumber == 4)
             {
-                phrase = Product.Sku;
+                phrase = Product.Model;
             }
             else if (lineNumber == 5)
             {
-                phrase = Product.Model;
-            }
-            else if (lineNumber == 6)
-            {
                 phrase = $"{Manufacturer} {Product.Model}";
             }
-            else if (lineNumber == 7)
-            {
-                phrase = $"{TranslatedManufacturer} {Product.Model}";
-            }
-            else if (lineNumber == 8)
+            else if (lineNumber == 6)
             {
                 phrase = $"{Product.ProductTypeShort} {Product.Model}";
             }

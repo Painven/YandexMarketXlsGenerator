@@ -9,26 +9,44 @@ namespace YandexMarketFileGenerator
     {
         public static string ToKeyPhrase(this string str, bool toLowerCase =  true)
         {
-            string[] InvaldChars = new string [] { "(", ")", "/", "\\", "+", "\"", "”" };
+            if (string.IsNullOrWhiteSpace(str)) { return null; }
 
+            string[] InvaldChars = new string[] { "(", ")", "\"", "”", "»", "«" };
+
+            var buffer = str;
+            foreach (var c in InvaldChars)
+            {
+                buffer = buffer.Replace(c, string.Empty);
+            }
+
+            buffer = buffer.Replace(",", ".")
+                           .Replace("–", "-")
+                           .Replace("+", "plus")
+                           .Replace("/", " ")
+                           .Replace("\\", " ");
+
+            if (toLowerCase)
+            {
+                buffer = buffer.ToLower();
+            }
+
+            return buffer.Trim();
+        }
+
+        public static int WordsCount(this string str)
+        {
             if (string.IsNullOrWhiteSpace(str))
             {
-                return null;
+                return 0;
+            }
+
+            if(str.Contains(" "))
+            {
+                return str.Split().Length;
             }
             else
             {
-                var buffer = str;
-                foreach (var c in InvaldChars)
-                {
-                    buffer = buffer.Replace(c, string.Empty);
-                }
-
-                if(toLowerCase)
-                {
-                    buffer = buffer.ToLower();
-                }
-
-                return buffer;
+                return 1;
             }
         }
 
@@ -39,7 +57,7 @@ namespace YandexMarketFileGenerator
 
         public static string ToViewedUrl(this string source)
         {
-            var result = source.ReplaceAll(new[] { " ", ".", "/", "_", "%", "*", "~", "!", "@", "$", "&", "(", ")" }, newSubString: "-");
+            var result = source.ReplaceAll(new[] { " ", ".", ",", "/", "_", "%", "*", "~", "!", "@", "$", "&", "(", ")", "+", "\"", "”", "–", "–" }, newSubString: "-");
 
             result = Regex.Replace(result, "-{2,}", "-").Trim('-');
 

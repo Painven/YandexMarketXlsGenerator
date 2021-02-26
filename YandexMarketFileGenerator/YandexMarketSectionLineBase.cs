@@ -10,6 +10,7 @@ namespace YandexMarketFileGenerator
         public const int TITLE2_MAX_LENGTH = 30;
         public const int TITLE3_MAX_LENGTH = 80;
         public const int VIEWED_URL_MAX_LENGTH = 20;
+        public const int KEY_PHRASE_MAX_WORDS = 7;
         
         protected string FullUrlPath => $"{parentSection.Host}/{Product.URL}/?utm_source=yandex";
         protected YandexMarketSection parentSection { get; }
@@ -56,7 +57,17 @@ namespace YandexMarketFileGenerator
 
         protected virtual void FillDictionary(int lineNumber)
         {
-            var cells = GetCellsRange();
+            var range1 = Enumerable.Range(0, 26)
+                .Select(i => (char)((int)'A' + i))
+                .Select(c => c.ToString())
+                .ToList();
+
+            var range2 = Enumerable.Range(0, 21)
+                .Select(i => (char)((int)'A' + i))
+                .Select(c => string.Concat("A", c.ToString()))
+                .ToList();
+
+            var cells = range1.Concat(range2).ToList();
 
             foreach (var cellLetter in cells)
             {
@@ -71,14 +82,14 @@ namespace YandexMarketFileGenerator
             }
 
             resultDictionary["E"] = GetGroupName();
-            resultDictionary["F"] = $"{parentSection.GroupIndex}";
+            resultDictionary["F"] = parentSection.GroupIndex.ToString();
             resultDictionary["I"] = GetPhrase(lineNumber);
             resultDictionary["K"] = GetTitle1();
             resultDictionary["L"] = GetTitle2();
             resultDictionary["M"] = GetTitle3();
             resultDictionary["Q"] = FullUrlPath;
             resultDictionary["R"] = GetViewedUrl();
-            resultDictionary["AV"] = GetProductPrice();
+            resultDictionary["AV"] = Product.Price == decimal.Zero ? "" : Product.Price.ToString("F0");
         }
         protected virtual string GetGroupName()
         {
