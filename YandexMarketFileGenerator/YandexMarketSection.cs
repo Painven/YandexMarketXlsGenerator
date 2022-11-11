@@ -13,7 +13,6 @@ namespace YandexMarketFileGenerator
         Type SectionType { get; }
         public string Manufacturer => ParentTemplate.Manufacturer;
         public string Host => ParentTemplate.Host;
-        public string TranslatedManufacturer => ParentTemplate.TranslatedManufacturer;
 
         public YandexMarketSection(IYandexDirectTemplate parentTemplate, Type lineType, OpenCartProductLine productLine, int groupIndex)
         {

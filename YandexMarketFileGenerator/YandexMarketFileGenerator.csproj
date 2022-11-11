@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YandexMarketFileGenerator</RootNamespace>
     <AssemblyName>YandexMarketFileGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,58 +42,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StringEx.cs" />
-    <Compile Include="Templates\UnitYandexDirectTemplate.cs" />
-    <Compile Include="Templates\CemYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ProxxonYandexDirectTemplate.cs" />
-    <Compile Include="Templates\TestboyYandexDirectTemplate.cs" />
-    <Compile Include="Templates\KvtYandexDirectTemplate.cs" />
-    <Compile Include="Templates\WeraYandexDirectTemplate.cs" />
-    <Compile Include="Templates\SchutYandexDirectTemplate.cs" />
-    <Compile Include="Templates\SewYandexDirectTemplate.cs" />
-    <Compile Include="Templates\FlukeYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ArtesynYandexDirectTemplate.cs" />
-    <Compile Include="Templates\CenterYandexDirectTemplate.cs" />
-    <Compile Include="Templates\MultiYandexDirectTemplate.cs" />
-    <Compile Include="Templates\PITYandexDirectTemplate.cs" />
-    <Compile Include="Templates\FITYandexDirectTemplate.cs" />
-    <Compile Include="Templates\EinhellYandexDirectTemplate.cs" />
-    <Compile Include="Templates\GedoreYandexDirectTemplate.cs" />
-    <Compile Include="Templates\PatriotYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ParatYandexDirectTemplate.cs" />
-    <Compile Include="Templates\KraftoolYandexDirectTemplate.cs" />
-    <Compile Include="Templates\GrindaYandexDirectTemplate.cs" />
-    <Compile Include="Templates\JCBYandexDirectTemplate.cs" />
-    <Compile Include="Templates\EnkorYandexDirectTemplate.cs" />
-    <Compile Include="Templates\VihrYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ItechYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ZubrYandexDirectTemplate.cs" />
-    <Compile Include="Templates\BesseyYandexDirectTemplate.cs" />
-    <Compile Include="Templates\HeycoYandexDirectTemplate.cs" />
-    <Compile Include="Templates\RennsteigYandexDirectTemplate.cs" />
-    <Compile Include="Templates\WolfGartenYandexDirectTemplate.cs" />
-    <Compile Include="Templates\CubCaderYandexDirectTemplate.cs" />
-    <Compile Include="Templates\MTDYandexDirectTemplate.cs" />
-    <Compile Include="Templates\KnipexYandexDirectTemplate.cs" />
-    <Compile Include="Templates\TestoYandexDirectTemplate.cs" />
-    <Compile Include="Templates\MeanWellYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ErsaYandexDirectTemplate.cs" />
-    <Compile Include="Templates\LeCroyYandexDirectTemplate.cs" />
-    <Compile Include="Templates\QEYandexDirectTemplate.cs" />
-    <Compile Include="Templates\KraftYandexDirectTemplate.cs" />
-    <Compile Include="Templates\DDEYandexDirectTemplate .cs" />
-    <Compile Include="Templates\KobaltYandexDirectTemplate.cs" />
-    <Compile Include="Templates\SfbelYandexDirectTemplate.cs" />
-    <Compile Include="Templates\HelferYandexDirectTemplate.cs" />
-    <Compile Include="Templates\ProskitMarketYandexDirectTemplate.cs" />
-    <Compile Include="Templates\PraktikaYandexDirectTemplate.cs" />
-    <Compile Include="Templates\IYandexDirectTemplate.cs" />
+    <Compile Include="Templates\Pendulum.cs" />
+    <Compile Include="Templates\Electrolube.cs" />
+    <Compile Include="Templates\NEC.cs" />
+    <Compile Include="Templates\Berger.cs" />
+    <Compile Include="Templates\Hantek.cs" />
+    <Compile Include="Templates\Murata.cs" />
+    <Compile Include="Templates\Victor.cs" />
+    <Compile Include="Templates\Klauke.cs" />
+    <Compile Include="Templates\Erem.cs" />
+    <Compile Include="Templates\AMO.cs" />
+    <Compile Include="Templates\Weicon.cs" />
+    <Compile Include="Templates\Brady.cs" />
+    <Compile Include="Templates\Leica.cs" />
+    <Compile Include="Templates\RGK.cs" />
+    <Compile Include="Templates\Rigol.cs" />
+    <Compile Include="Templates\Displays.cs" />
+    <Compile Include="Templates\Dremel.cs" />
+    <Compile Include="Templates\Tianma.cs" />
+    <Compile Include="Templates\BOE.cs" />
+    <Compile Include="Templates\UNI-T.cs" />
+    <Compile Include="Templates\AU Optronics.cs" />
+    <Compile Include="IYandexDirectTemplate.cs" />
     <Compile Include="OpenCartProductLine.cs" />
-    <Compile Include="Templates\AppaYandexDirectTemplate.cs" />
-    <Compile Include="Templates\AktakomYandexDirectTemplate.cs" />
-    <Compile Include="Templates\WellerYandexDirectTemplate.cs" />
-    <Compile Include="Templates\MegeonYandexDirectTemplate.cs" />
-    <Compile Include="Templates\HakkoYandexDirectTemplate.cs" />
-    <Compile Include="Templates\WihaYandexDirectTemplate.cs" />
     <Compile Include="YandexGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YandexMarketSection.cs" />

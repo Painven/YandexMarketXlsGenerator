@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace YandexMarketFileGenerator
 {
+    //?roistat=direct1_{source_type}_{banner_id}_{keyword}&roistat_referrer={source}&roistat_pos={position_type}_{position}
     public abstract class YandexMarketSectionLineBase
     {
         public const int TITLE1_MAX_LENGTH = 35;
@@ -12,7 +13,7 @@ namespace YandexMarketFileGenerator
         public const int VIEWED_URL_MAX_LENGTH = 20;
         public const int KEY_PHRASE_MAX_WORDS = 7;
         
-        protected string FullUrlPath => $"{parentSection.Host}/{Product.URL}/?utm_source=yandex";
+        protected string FullUrlPath => $"{parentSection.Host}/{Product.URL}";
         protected YandexMarketSection parentSection { get; }
         protected Dictionary<string, string> resultDictionary { get; }
         protected OpenCartProductLine Product
@@ -41,8 +42,8 @@ namespace YandexMarketFileGenerator
         protected string Model => Product.Model;
         protected string ProductTypeShort => Product.ProductTypeShort;
         protected string ProductTypeFull => Product.ProductTypeFull;
-
-        protected string TranslatedManufacturer => parentSection.TranslatedManufacturer;
+        protected string ModelOrSku => !string.IsNullOrWhiteSpace(Product.Model) ? Product.Model :
+            (!string.IsNullOrWhiteSpace(Product.Sku) ? Product.Sku : throw new ArgumentNullException());
 
         public YandexMarketSectionLineBase(YandexMarketSection parentSection)
         {
@@ -106,6 +107,7 @@ namespace YandexMarketFileGenerator
                  .Replace("/", "-")
                  .Replace("\\", "-")
                  .Replace(".", "-")
+                 .Replace("+", "-")
                  .Replace("–", "")
                  .Replace("(", string.Empty)
                  .Replace(")", string.Empty)

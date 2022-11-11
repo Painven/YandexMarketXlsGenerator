@@ -21,7 +21,7 @@ namespace YandexMarketFileGenerator
 
             buffer = buffer.Replace(",", ".")
                            .Replace("–", "-")
-                           .Replace("+", "plus")
+                           .Replace("+", " ")
                            .Replace("/", " ")
                            .Replace("\\", " ");
 

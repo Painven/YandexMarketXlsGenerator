@@ -45,9 +45,6 @@ namespace YandexMarketFileGenerator
                 product.Price = !string.IsNullOrWhiteSpace(data[6]) ? decimal.Parse(data[6]) : decimal.Zero;
                 product.URL = data[7].Replace("  ", " ").Trim();
                 product.CustomField = data[8].Trim();
-
-
-                
             }
             catch(Exception ex)
             {
