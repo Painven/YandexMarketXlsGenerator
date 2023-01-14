@@ -36,7 +36,8 @@ namespace YandexMarketFileGenerator.Templates
 
             foreach (var line in productsInfo)
             {
-                sb.Append(CreateSection(line, startGroupSectionNumber++, 4));
+                int lines = line.IsUniquePhrase ? 4 : 3;
+                sb.Append(CreateSection(line, startGroupSectionNumber++, lines));
             }
 
             return sb.ToString();
@@ -105,8 +106,8 @@ namespace YandexMarketFileGenerator.Templates
             {
                 case 1: keyPhrase = Product.Model; break;
                 case 2: keyPhrase = $"{Manufacturer} {Model}"; break;
-                case 3: keyPhrase = $"{ProductTypeShort} {Model}"; break;
-                case 4: keyPhrase = $"ригол {Model}"; break;
+                case 4: keyPhrase = $"{ProductTypeFull} {Model}"; break;
+                case 3: keyPhrase = $"{ProductTypeShort} {Model}"; break;               
                 default: throw new NotImplementedException();
             }
 
