@@ -1,71 +1,100 @@
-﻿<Window x:Class="YandexMarketXlsGenerator.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:YandexMarketXlsGenerator"
-        xmlns:vm="clr-namespace:YandexMarketXlsGenerator.ViewModels"
-        mc:Ignorable="d"
-        Title="YandexDirect exporter" Height="429.5" Width="889.5" Icon="yandex-direct-logo.ico">
+﻿<Window
+    x:Class="YandexMarketXlsGenerator.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:YandexMarketXlsGenerator"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:YandexMarketXlsGenerator.ViewModels"
+    Title="YandexDirect exporter"
+    Width="889.5"
+    Height="429.5"
+    Icon="yandex-direct-logo.ico"
+    mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <local:NullToFalseConverter x:Key="NullToFalseConverter"/>
+        <local:NullToFalseConverter x:Key="NullToFalseConverter" />
     </Window.Resources>
-    
+
     <DockPanel>
         <Grid Margin="2,10,2,2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0">
-                <TextBlock Text="Начальный индекс группы" 
-                           DockPanel.Dock="Left"
-                           VerticalAlignment="Center" Margin="4 2 2 2"/>
-                <TextBox x:Name="txtStartGroupIndex"
-                         HorizontalContentAlignment="Center"
-                         DockPanel.Dock="Left"
-                    Width="40" HorizontalAlignment="Left" Margin="2" Text="{Binding StartGroupIndex}"/>
+                <TextBlock
+                    Margin="4,2,2,2"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    Text="Начальный индекс группы" />
+                <TextBox
+                    x:Name="txtStartGroupIndex"
+                    Width="40"
+                    Margin="2"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Center"
+                    DockPanel.Dock="Left"
+                    Text="{Binding StartGroupIndex}" />
 
-                <TextBlock x:Name="txtLoadedProductsCount" 
-                       Text="{Binding LoadedProductLines, StringFormat='{}Загружено товаров: {0}', FallbackValue=Загружено товаров: 0}"  
-                       Margin="0,0,8,2" 
-                       FontWeight="Bold" 
-                       HorizontalAlignment="Right"
-                       DockPanel.Dock="Right"/>
+                <TextBlock
+                    x:Name="txtLoadedProductsCount"
+                    Margin="0,0,8,2"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    FontWeight="Bold"
+                    Text="{Binding LoadedProductLines, StringFormat='{}Загружено товаров: {0}', FallbackValue=Загружено товаров: 0}" />
             </DockPanel>
-            <TextBox x:Name="txtInput" 
-                     Margin="2,4,2,2" 
-                     Grid.Row="1" 
-                     AcceptsReturn="True" 
-                     AcceptsTab="True" 
-                     Text="{Binding RawStringData}"/>
+            <TextBox
+                x:Name="txtInput"
+                Grid.Row="1"
+                Margin="2,4,2,2"
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                Text="{Binding RawStringData}" />
 
             <DockPanel Grid.Row="2" Height="40">
-                <TextBlock Text="Шаблон" DockPanel.Dock="Left" VerticalAlignment="Center" />
-                <ComboBox x:Name="cmbxTemplateType" 
-                          DisplayMemberPath="Description"
-                          SelectedValuePath="Type"
-                          ItemsSource="{Binding Templates}"
-                          SelectedIndex="{Binding SelectedIndex}"
-                          DockPanel.Dock="Left" 
-                          IsEditable="True"
-                          IsTextSearchEnabled="True"
-                          IsTextSearchCaseSensitive="False"
-                          MinWidth="200" Margin="4" />
-                <Button x:Name="btnGetExportData" 
-                        Padding="15,2,15,2" Margin="4" HorizontalAlignment="Right"
-                        Command="{Binding GetExportDataCommand}"
-                        Background="Blue"
-                        Foreground="Black"
-                        FontWeight="Bold"
-                        IsEnabled="{Binding ElementName=cmbxTemplateType, Path=SelectedValue, Converter={StaticResource NullToFalseConverter}}"
-                        Content="Получить данные" Width="330" >
-                </Button>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    Text="Шаблон" />
+                <ComboBox
+                    x:Name="cmbxTemplateType"
+                    MinWidth="120"
+                    Margin="4"
+                    VerticalAlignment="Center"
+                    DisplayMemberPath="Description"
+                    DockPanel.Dock="Left"
+                    IsEditable="True"
+                    IsTextSearchCaseSensitive="False"
+                    IsTextSearchEnabled="True"
+                    ItemsSource="{Binding Templates}"
+                    SelectedIndex="{Binding SelectedIndex}"
+                    SelectedValuePath="Type" />
+                <Button
+                    x:Name="btnGetExportData"
+                    Width="200"
+                    Margin="4"
+                    Padding="15,2,15,2"
+                    Background="Blue"
+                    Command="{Binding GetExportDataCommand}"
+                    Content="Получить данные"
+                    DockPanel.Dock="Right"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    IsEnabled="{Binding ElementName=cmbxTemplateType, Path=SelectedValue, Converter={StaticResource NullToFalseConverter}}" />
+                <Button
+                    x:Name="btnGetExportSql"
+                    Command="{Binding GetExportSqlCommand}"
+                    Width="200"
+                    Margin="4"
+                    Padding="15,2,15,2"
+                    Content="SQL экспорта"
+                    DockPanel.Dock="Right" />
             </DockPanel>
 
         </Grid>

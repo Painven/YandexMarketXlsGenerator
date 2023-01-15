@@ -17,12 +17,12 @@ namespace YandexMarketXlsGenerator.ViewModels
         public int StartGroupIndex { get => _startGroupIndex; set => Set(ref _startGroupIndex, value); }
 
         private string _rawStringData = "";
-        public string RawStringData 
-        { 
+        public string RawStringData
+        {
             get => _rawStringData;
             set
             {
-                if(Set(ref _rawStringData, value))
+                if (Set(ref _rawStringData, value))
                 {
                     repository.Save(_rawStringData);
                 }
@@ -40,12 +40,12 @@ namespace YandexMarketXlsGenerator.ViewModels
         }
 
         private int _selectedIndex;
-        public int SelectedIndex 
-        { 
+        public int SelectedIndex
+        {
             get => _selectedIndex;
             set
             {
-                if(Set(ref _selectedIndex, value))
+                if (Set(ref _selectedIndex, value))
                 {
                     Properties.Settings.Default.LastSelectedIndex = _selectedIndex;
                     Properties.Settings.Default.Save();
@@ -59,6 +59,7 @@ namespace YandexMarketXlsGenerator.ViewModels
         public TemplateData SelectedTemplate => Templates[SelectedIndex];
 
         public ICommand GetExportDataCommand { get; }
+        public ICommand GetExportSqlCommand { get; }
 
         public MainWindowViewModel(IRawDataRepository repository) : this()
         {
@@ -70,6 +71,7 @@ namespace YandexMarketXlsGenerator.ViewModels
         {
             Templates = new ObservableCollection<TemplateData>();
             GetExportDataCommand = new RelayCommand(GetExportData);
+            GetExportSqlCommand = new RelayCommand(GetExportSql);
 
             foreach (var template in YandexGenerator.GetAvailabledTemplateList())
             {
@@ -77,6 +79,19 @@ namespace YandexMarketXlsGenerator.ViewModels
             }
 
             SelectedIndex = Properties.Settings.Default.LastSelectedIndex;
+        }
+
+        private void GetExportSql(object obj)
+        {
+            string manufacturer = SelectedIndex >= 0 ? Templates[SelectedIndex]?.Description : "--------";
+            var sql = $@"SELECT d.name, '' as typeFull, '' as typeShort, 'true' as uniquePhrase, model, sku, (SELECT keyword FROM oc_url_alias WHERE query = CONCAT('product_id=', p.product_id)) as url, p.price, '' as customField
+            FROM oc_product p
+            JOIN oc_product_description d ON p.product_id = d.product_id
+            JOIN oc_manufacturer m ON p.manufacturer_id = m.manufacturer_id
+            WHERE m.name = '{manufacturer}' AND p.status = 1 AND d.main_product = 0
+            ORDER BY d.name";
+
+            Clipboard.SetText(sql);
         }
 
         private void GetExportData(object obj)

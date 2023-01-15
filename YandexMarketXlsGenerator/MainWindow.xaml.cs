@@ -14,7 +14,10 @@ namespace YandexMarketXlsGenerator
             DataContext = new MainWindowViewModel(new TextStorage("data.txt"));
         }
 
+        private void btnGetExportSql_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 
 

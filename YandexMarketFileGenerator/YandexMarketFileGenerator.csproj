@@ -48,6 +48,7 @@
     <Compile Include="Templates\Berger.cs" />
     <Compile Include="Templates\Hantek.cs" />
     <Compile Include="Templates\Murata.cs" />
+    <Compile Include="Templates\Guide.cs" />
     <Compile Include="Templates\Victor.cs" />
     <Compile Include="Templates\Klauke.cs" />
     <Compile Include="Templates\Erem.cs" />
