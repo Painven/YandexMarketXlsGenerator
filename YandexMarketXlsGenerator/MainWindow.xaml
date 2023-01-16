@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:YandexMarketXlsGenerator.ViewModels"
     Title="YandexDirect exporter"
-    Width="889.5"
-    Height="429.5"
+    Width="685"
+    Height="308"
     Icon="yandex-direct-logo.ico"
     mc:Ignorable="d">
     <Window.DataContext>

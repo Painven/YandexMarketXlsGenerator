@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StringEx.cs" />
+    <Compile Include="Templates\Phillips.cs" />
     <Compile Include="Templates\Pendulum.cs" />
     <Compile Include="Templates\Electrolube.cs" />
     <Compile Include="Templates\NEC.cs" />
